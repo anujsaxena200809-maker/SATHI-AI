@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lgx%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2360a5fa%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231e3a8a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2230%22%20fill%3D%22url%28%23lgx%29%22/%3E%3Cg%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2225%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-opacity%3D%22.4%22%20stroke-width%3D%221.5%22%20stroke-dasharray%3D%223%205%22/%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%227%22%20r%3D%223.5%22%20fill%3D%22%23fff%22/%3E%3C/g%3E%3Cg%3E%3Cpath%20d%3D%22M32%2047s-13-8-13-18a7.5%207.5%200%200113-5%207.5%207.5%200%200113%205c0%2010-13%2018-13%2018z%22%20fill%3D%22%23f43f5e%22/%3E%3Cpath%20d%3D%22M32%2028v10M27%2033h10%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22/%3E%3C/g%3E%3C/svg%3E">
+<title>SaathiCare</title>
+<style>
+:root{--ease:cubic-bezier(.22,1,.36,1);--brand:#1d4ed8;--brand-dark:#1e3a8a;--navy:#0b1b3a;--navy2:#16305f;--ink:#000;--mut:#5b6b88;--card:#fff;--line:#dfe6f1;--surf:#f5f7f6;--or:#ff8a3d;--pk:#ff4f8b;--red:#e5233f;--teal:#12b5b0;--blue:#2f6bff;--ok:#16a870;--warn:#f2a100;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth;font-size:19px}
+*{box-sizing:border-box;margin:0}
+body{font-family:Roboto,"Noto Sans Devanagari","Segoe UI",system-ui,sans-serif;font-weight:700;color:var(--ink);background:#fff;min-height:100vh;padding-bottom:90px;overflow-x:hidden}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease),border-color .3s,color .3s}
+button:active{transform:scale(.96)}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.ic{width:1.3rem;height:1.3rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.screen{display:none}.screen.on{display:block}
+/* sign-in */
+#signin{min-height:100vh;align-items:center;justify-content:center;padding:16px;transition:opacity .45s,transform .45s}
+#signin.on{display:flex}#signin.leave{opacity:0;transform:translateY(-16px) scale(.98)}
+.brand{display:flex;align-items:center;gap:10px;justify-content:center}.logo{display:inline-block;width:72px;height:72px}.logo svg{display:block;width:100%;height:100%}.orbit{transform-origin:32px 32px;animation:spin 7s linear infinite}.beat{transform-origin:32px 36px;animation:lub 1.6s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes lub{0%,30%,100%{transform:scale(1)}12%{transform:scale(1.14)}20%{transform:scale(1.02)}}
+.word{font-size:43px;font-weight:800;letter-spacing:-.03em}.word b{color:var(--brand)}
+.tag{text-align:center;color:var(--mut);font-size:1.1rem;margin-top:2px}
+.brand.sm{justify-content:center;margin-bottom:6px}.brand.sm .logo{width:30px;height:30px}.brand.sm .word{font-size:1.15rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:16px;box-shadow:0 6px 20px rgba(11,27,58,.08)}
+.si{width:min(440px,100%);margin:18px auto 0;padding:24px}
+.si label{display:block;font-size:.9rem;font-weight:700;color:var(--mut);margin-top:6px}
+.si input{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surf);font-size:1.05rem;margin:4px 0 2px;transition:.2s}
+::placeholder{font-size:.8rem;color:var(--mut);opacity:.7}
+.si input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(37,99,235,.2);outline:0}
+.err{color:var(--red);font-size:.72rem;min-height:1rem}.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 20px;border-radius:999px;background:var(--brand);color:#fff;font-weight:700;font-size:.95rem;text-decoration:none;border:1.5px solid #60a5fa;position:relative;overflow:hidden;box-shadow:0 2px 6px rgba(30,64,175,.35)}
+.btn:hover{background:var(--brand-dark);transform:translateY(-2px);box-shadow:0 7px 16px rgba(30,64,175,.45)}.btn.alt{background:#2563eb;color:#fff;border-color:#60a5fa}.btn.alt:hover{background:var(--brand-dark)}.btn.red{background:var(--red);border-color:#b91c1c}.btn.full{width:100%;margin-top:8px}
+/* dashboard */
+.wrap{max-width:900px;margin:auto;padding:12px 14px}
+.rise{animation:rise .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*70ms)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;color:var(--ink)}
+.hello{font-size:1.5rem;font-weight:700}
+.hello b{font-weight:800;color:var(--brand)}
+.sub{font-size:.85rem;color:var(--mut)}
+.ctl{display:flex;gap:6px;align-items:center;justify-content:center}
+.ctl button,.ctl select{background:var(--brand);color:#fff;border:1.5px solid #60a5fa;border-radius:999px;padding:9px 15px;font-size:.88rem;font-weight:700}
+.ctl option{color:#000}
+.hero{display:flex;flex-direction:column;gap:8px;margin:10px 0 16px;align-items:center;text-align:center}
+.status{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink)}
+.status small{display:block;font-size:.75rem;color:var(--mut)}.status b{font-size:1.1rem}
+.hw{position:relative;display:block;transition:transform .3s ease}
+.hw svg{display:block;width:136px;height:132px;fill:#d6246e;stroke:none;filter:drop-shadow(0 10px 16px rgba(214,36,110,.4));transition:fill .3s ease,filter .3s ease}
+.status:hover .hw{transform:scale(1.07)}
+.status:hover .hw svg{fill:#f0488f;filter:drop-shadow(0 14px 26px rgba(214,36,110,.6))}
+.status:active .hw,.status.pressed .hw{transform:scale(.96)}
+.status:active .hw svg,.status.pressed .hw svg{fill:#9d174d}
+.hs{position:absolute;left:0;right:0;top:28%;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.status .hs small{color:#fff;font-size:.6rem;font-weight:700}
+.status .hs b{color:#fff;font-size:1.7rem;font-weight:800;line-height:1.05}
+.hs b::after{content:"/100";font-size:.55rem;font-weight:700;margin-left:3px;opacity:.9}
+.feed{color:var(--mut);font-size:.74rem;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;line-height:1.35}
+.feed b{color:var(--ink)}.live{flex:none;width:8px;height:8px;border-radius:50%;background:var(--brand)}
+.feed .btn{padding:5px 10px;font-size:.72rem;flex:none}
+.alert{background:var(--red);color:#fff;border-radius:14px;padding:10px 12px;margin:10px 0;display:flex;flex-wrap:wrap;gap:8px;animation:rise .4s}
+.alert[hidden]{display:none}.alert b{flex:1 1 100%}.alert .btn{background:rgba(255,255,255,.22)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.m{background:var(--card);border:1.5px solid var(--line);border-radius:24px;padding:10px 6px;text-align:center;display:grid;justify-items:center;gap:4px}
+.m:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:0 8px 18px rgba(37,99,235,.2)}
+.m.act{border-color:var(--brand);box-shadow:0 0 0 2px rgba(37,99,235,.25)}
+.m .mh{font-size:.68rem;color:var(--mut);display:flex;align-items:center;gap:6px}
+.m b{font-size:1.25rem}.m small{font-size:.7rem;color:var(--mut);font-weight:700}
+.gauge{width:64px;height:64px;transition:transform .2s}.m:hover .gauge{transform:scale(1.08)}
+.sp{width:100%;height:20px}.chart{display:block;width:100%;max-width:320px;margin:6px auto 2px}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;width:100%;max-width:520px}.quick .btn{width:100%}.quick .btn{padding:12px 12px;font-size:.9rem}.quick .ic{width:1rem;height:1rem}
+.row:hover,.rm:hover{background:var(--surf)}.ctl button:hover,.ctl select:hover{background:var(--brand-dark)}.chips button:hover{background:rgba(255,255,255,.3)}
+.flash{box-shadow:0 0 0 3px rgba(37,99,235,.3)}
+.bigw{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0}.bigw .gauge{width:120px;height:120px}
+.rcs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.rc{text-align:center}.rc .gauge{width:100%;max-width:60px}.rc small{display:block;font-size:.7rem;color:var(--mut)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}.dot.warn{background:var(--warn)}.dot.crit{background:var(--red)}
+.chip{font-style:normal;padding:2px 8px;border-radius:99px;font-size:.7rem;font-weight:700;background:rgba(22,168,112,.15);color:var(--ok)}
+.chip.warn{background:rgba(242,161,0,.18);color:#b57700}.chip.crit{background:rgba(229,35,63,.15);color:var(--red)}
+.duo{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-top:12px}
+h2{font-size:1rem;margin-bottom:6px}
+.rm{display:flex;align-items:center;gap:10px;padding:8px;border:1px solid var(--line);border-radius:18px;margin-top:8px;border-radius:18px;transition:.3s}
+.rm small{display:block;color:var(--mut);font-size:.72rem}
+.rm.done{background:rgba(22,168,112,.1)}.rm.done b{text-decoration:line-through}
+.chk{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:transparent;flex:none}
+.done .chk{background:var(--ok);border-color:var(--ok);color:#fff;animation:pop .35s}
+@keyframes pop{50%{transform:scale(1.25)}}
+.bar{height:6px;border-radius:9px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--brand);transition:width .5s}
+.bar.w{width:90px}
+.add{display:flex;gap:6px;margin-top:10px}.add input{flex:1;min-width:0;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surf);font-size:.85rem}
+/* care wheel */
+.ringcard{text-align:center;padding:14px 4px}
+.wheel{position:relative;width:300px;height:300px;margin:6px auto}
+.ring{position:absolute;inset:0;transform:rotate(var(--spin,0deg))}
+.ring::before{content:"";position:absolute;inset:12px;border:2px dashed #bfdbfe;border-radius:50%}
+.rb{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px;border-radius:50%;background:var(--card);border:1px solid var(--line);box-shadow:0 4px 12px rgba(11,27,58,.12);display:grid;place-items:center;align-content:center;font-size:.62rem;font-weight:700;transform:rotate(var(--a)) translateY(-100px) rotate(calc(-1*var(--a) - var(--spin,0deg)));transition:background .25s,border-color .25s,box-shadow .25s}
+.rb .ic{width:1.15rem;height:1.15rem}.rb:active{transform:rotate(var(--a)) translateY(-100px) rotate(calc(-1*var(--a) - var(--spin,0deg))) scale(.94)}
+.rb:hover{border-color:var(--brand);background:#eff6ff;box-shadow:0 6px 16px rgba(37,99,235,.3)}.rb.on{background:var(--brand);color:#fff}
+.sos{position:absolute;left:50%;top:50%;width:88px;height:88px;margin:-44px;border-radius:50%;background:var(--red);color:#fff;font-weight:800;font-size:1.1rem;letter-spacing:.05em;box-shadow:0 6px 18px rgba(229,35,63,.5)}
+.sos::before,.sos::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--red);animation:wave 2s infinite}.sos::after{animation-delay:1s}
+@keyframes wave{to{transform:scale(1.7);opacity:0}}
+.foot{font-size:.72rem;color:var(--mut);text-align:center;margin:16px 0 4px}
+/* panels, assistant, toast */
+.ov{position:fixed;inset:0;background:rgba(7,15,35,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center;animation:fade .2s}
+.ov[hidden]{display:none}@keyframes fade{from{opacity:0}}
+.panel{background:var(--card);width:min(560px,100%);max-height:88vh;overflow:auto;border-radius:30px 30px 0 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom,0px));animation:up .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+@media(min-width:700px){.ov{align-items:center}.panel{border-radius:30px}.grid{grid-template-columns:repeat(3,1fr)}}
+.ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.ph h3{font-size:1.05rem}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.88rem}
+.note{font-size:.78rem;color:var(--mut);margin:6px 0;line-height:1.4}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.big{font-size:1.6rem;font-weight:800;display:flex;align-items:baseline;gap:8px}
+.av{width:38px;height:38px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+.map{width:100%;border-radius:22px;border:1px solid var(--line)}
+.route{stroke:var(--blue);stroke-width:3;stroke-dasharray:6 5;animation:dash 1s linear infinite}@keyframes dash{to{stroke-dashoffset:-11}}
+.tl{padding-left:18px;font-size:.85rem;line-height:1.7}.tl li{animation:rise .4s}
+.sosbox{background:rgba(229,35,63,.1);border-left:4px solid var(--red);padding:8px 10px;border-radius:8px;font-size:.82rem}
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 20px));display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 8px 24px rgba(11,27,58,.25);z-index:40}
+.dock input{flex:1;border:0;background:none;padding:0 10px;font-size:.9rem;outline:0;min-width:0}
+.dock button{width:42px;height:42px;border-radius:50%;background:var(--brand);color:#fff;border:1.5px solid #60a5fa;display:grid;place-items:center;box-shadow:0 2px 6px rgba(30,64,175,.35)}.dock .go{background:var(--brand);color:#fff}.dock [aria-pressed=true]{background:#0d9488;color:#fff}
+#bubble{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(68px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 20px));background:var(--navy);color:#fff;border-radius:24px;padding:14px 16px;z-index:60;font-size:.88rem;line-height:1.4;animation:up .3s;max-height:40vh;overflow:auto}
+#bubble[hidden]{display:none}.bx{float:right;color:#9fb0d0;font-size:.75rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chips button{background:rgba(255,255,255,.12);color:#fff;border-radius:99px;padding:4px 10px;font-size:.74rem}
+#toast{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-90px);background:var(--ink);color:var(--card);padding:8px 14px;border-radius:10px;font-size:.82rem;z-index:80;transition:.3s;max-width:90%;text-align:center}
+#toast.on{transform:translate(-50%,0)}
+.btn::before,.side button::before{content:"";position:absolute;top:0;left:-120%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);transition:left .6s ease;pointer-events:none}
+.btn:hover::before,.side button:hover::before{left:140%}
+.btn .ic{transition:transform .3s ease}.btn:hover .ic{transform:scale(1.2) rotate(-8deg)}
+.dock button:hover,.ctl button:hover{background:var(--brand-dark);box-shadow:0 4px 10px rgba(30,64,175,.4)}.dock .go:hover{background:var(--brand-dark)}
+.btn:active,.btn.pressed,.btn.alt:active,.btn.alt.pressed{background:var(--red);border-color:#b91c1c;color:#fff;box-shadow:0 4px 12px rgba(229,35,63,.55);transform:scale(.95)}
+.btn.pressed,.side button.pressed{animation:bpop .4s ease}
+@keyframes bpop{40%{transform:scale(.9)}70%{transform:scale(1.05)}}
+.btn.red:hover{background:#c81e36}.btn.red:active,.btn.red.pressed{background:#7f1d1d;border-color:#7f1d1d}
+.m:active,.m.pressed{background:#fee2e2;border-color:var(--red)}
+.rb:active,.rb.pressed,.rb.on:active,.rb.on.pressed,.ctl button:active,.ctl button.pressed,.dock button:active,.dock button.pressed{background:var(--red);border-color:#b91c1c;color:#fff}
+.card,.rm,.row{transition:background .3s,border-color .3s,box-shadow .3s}
+.side{overflow-x:auto;scrollbar-width:none;padding:6px 0 10px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.track{display:flex;width:max-content}
+@keyframes slide{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.side::-webkit-scrollbar{display:none}
+.side button{position:relative;overflow:hidden;display:flex;align-items:center;gap:6px;flex:none;margin-right:8px;padding:10px 18px;border-radius:999px;border:1.5px solid #60a5fa;background:var(--brand);color:#fff;font-size:.92rem;font-weight:700;box-shadow:0 2px 6px rgba(30,64,175,.3)}
+.side button:hover{background:var(--brand-dark);transform:translateY(-2px);box-shadow:0 6px 14px rgba(30,64,175,.4)}
+.side button.on{background:var(--brand-dark);border-color:#fff;box-shadow:0 0 0 2px var(--brand)}
+.side button:active,.side button.pressed{background:var(--red);border-color:#b91c1c}
+.side .em{background:#b91c1c;border-color:#fca5a5}.side .em:hover{background:#991b1b}.side .em.on{background:#7f1d1d}.side .em:active,.side .em.pressed{background:var(--red)}
+.side .ic{width:1rem;height:1rem}
+.srch{max-width:520px;margin-left:auto!important;margin-right:auto!important;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;margin:2px 0 6px;color:var(--mut)}
+.srch:focus-within{border-color:var(--brand)}.srch input{flex:1;border:0;outline:0;background:none;font-size:.85rem;min-width:0}
+#bell{position:relative}.nd{position:absolute;top:4px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--red)}
+.av.sm{width:30px;height:30px;font-size:.8rem}
+.appt{margin-top:12px}.card+.card{margin-top:10px}
+.eyebrow{font-size:.7rem;letter-spacing:.12em;color:var(--brand);font-weight:700;margin-top:6px}
+.pt{font-size:1.4rem;margin:2px 0 10px}h3{font-size:.95rem;margin:14px 0 4px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+.tile{display:grid;gap:3px;text-align:left;justify-items:start;background:var(--card);border:1.5px solid var(--line);border-radius:24px;padding:14px}
+.tile:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:0 8px 18px rgba(37,99,235,.2)}.tile:active,.tile.pressed{background:#fee2e2;border-color:var(--red)}
+.tile small{font-size:.72rem;color:var(--mut)}
+.ti{width:38px;height:38px;border-radius:12px;background:#dbeafe;color:#1d4ed8;display:grid;place-items:center;margin-bottom:4px}
+.field{width:100%;padding:8px 12px;border:1.5px solid var(--line);border-radius:999px;background:#fff;font-size:.85rem}
+.field:focus{border-color:var(--brand);outline:0;box-shadow:0 0 0 3px rgba(37,99,235,.2)}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stats .card{margin:0!important}
+.sosrow{background:rgba(229,35,63,.1);border:1.5px solid var(--red);border-radius:24px;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(160deg,#bfdbfe 0%,#eff6ff 38%,#fff 62%,#dbeafe 100%)}
+.sos::before,.sos::after{pointer-events:none}
+.hw::before,.hw::after{content:"";position:absolute;left:50%;top:48%;width:90px;height:90px;margin:-45px 0 0 -45px;border-radius:50%;border:2px solid #d6246e;animation:wave 2.4s infinite;pointer-events:none}
+.hw::after{animation-delay:1.2s}
+.row{flex-wrap:wrap}.back{padding:9px 16px;font-size:.85rem;margin-top:2px}
+.holdbtn{position:relative;overflow:hidden;width:100%;margin:10px 0 0;padding:12px;border-radius:999px;background:#fee2e2;border:2px solid var(--red);color:#7f1d1d;font-weight:900;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.holdbtn i{position:absolute;left:0;top:0;height:100%;width:0;background:rgba(229,35,63,.45)}.holdbtn span{position:relative}
+.slide{animation:slidein .4s cubic-bezier(.2,.8,.2,1) both}@keyframes slidein{from{opacity:0;transform:translateX(40px)}}
+.chart circle{cursor:pointer}
+.acts{justify-content:center}.eyebrow,.pt{text-align:center}.back{display:flex;width:max-content;margin:4px auto 0}
+.btn:hover,.side button:hover,.tile:hover,.m:hover{animation:floaty 1.5s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(-3px)}50%{transform:translateY(-7px)}}
+.btn:active,.btn.pressed,.side button:active,.side button.pressed,.m:active,.tile:active{animation:none}
+#loader{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(160deg,#bfdbfe,#fff 60%,#dbeafe);transition:opacity .4s}
+#loader[hidden]{display:none}#loader.out{opacity:0;pointer-events:none}
+.lbar{width:220px;height:7px;border-radius:9px;background:#dbeafe;overflow:hidden}.lbar i{display:block;height:100%;width:0;background:var(--brand);border-radius:9px}
+@keyframes load{to{width:100%}}
+@keyframes bob{50%{transform:translateY(-8px)}}#loader .logo{animation:bob 1.4s ease-in-out infinite}
+.wrap{text-align:center}.tile{text-align:center;justify-items:center}
+.pt::after{content:"";display:block;width:56px;height:5px;border-radius:5px;background:linear-gradient(90deg,var(--brand),#38bdf8);margin:8px auto 0}
+.ecg{width:min(280px,80%);height:34px;fill:none;stroke:var(--brand);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:420;stroke-dashoffset:420;animation:ecg 3.6s linear infinite;opacity:.8}
+@keyframes ecg{to{stroke-dashoffset:-420}}
+body::after{content:"";position:fixed;inset:-5%;z-index:-1;pointer-events:none;background:radial-gradient(circle at 12% 16%,rgba(59,130,246,.2) 0,transparent 36%),radial-gradient(circle at 90% 80%,rgba(14,165,233,.18) 0,transparent 40%),radial-gradient(circle at 72% 6%,rgba(244,63,94,.07) 0,transparent 28%);animation:drift 16s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(-14px,16px) scale(1.05)}}
+.card,.rm,.row{transition:background .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease),transform .4s var(--ease)}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(30,64,175,.14)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:var(--ease)}
+.nd[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.dup{display:none}.track{flex-wrap:wrap;width:auto}*{animation:none!important;transition:none!important}}
+</style></head><body>
+
+<!-- SVG icon + logo library (no emojis anywhere) -->
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-9-5.5-9-12a5 5 0 019-3 5 5 0 019 3c0 6.500-9 12-9 12z"/></symbol>
+<symbol id="i-family" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.500 2.700-6 6-6s6 2.500 6 6"/><circle cx="17" cy="9" r="2.400"/><path d="M17 14c2.500 0 4 2 4 5"/></symbol>
+<symbol id="i-reports" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></symbol>
+<symbol id="i-test" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3"/></symbol>
+<symbol id="i-cab" viewBox="0 0 24 24"><path d="M4 17v-5l2-5h12l2 5v5M4 17h16M4 17v2M20 17v2M7 13h.01M17 13h.01"/></symbol>
+<symbol id="i-care" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10h.01M12 10h.01M15 10h.01"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></symbol>
+<symbol id="i-spk" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 010 6"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2-7z"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<linearGradient id="gfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d4ed8" stop-opacity=".28"/><stop offset="1" stop-color="#1d4ed8" stop-opacity="0"/></linearGradient>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-12a7 7 0 00-14 0c0 6 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="i-device" viewBox="0 0 24 24"><rect x="7" y="5" width="10" height="14" rx="3"/><path d="M9 5l1-3h4l1 3M9 19l1 3h4l1-3"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0112 0v5l2 2H4zM10 21h4"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></symbol>
+<symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+</defs></svg>
+
+<!-- SCREEN 1: sign-in -->
+<div id="loader"><span class="logo" data-logo></span><div class="word">Saathi<b>Care</b></div><div class="lbar"><i></i></div><p class="note" id="ltxt">Loading...</p></div>
+<main id="signin" class="screen on"><div>
+  <div class="brand"><span class="logo" data-logo></span><span class="word">Saathi<b>Care</b></span></div>
+  <p class="tag">Your intelligent healthcare companion</p>
+  <form id="siForm" class="card si" novalidate>
+    <label for="name">Patient name</label><input id="name" autocomplete="name" placeholder="e.g. Anuj"><div class="err" id="eName"></div>
+    <label for="phone">Phone number</label><input id="phone" type="tel" inputmode="tel" placeholder="10 digit number"><div class="err" id="ePhone"></div>
+    <button class="btn full">Sign in</button>
+  </form>
+  <p class="note" style="text-align:center">Details stay on this device.</p>
+</div></main>
+
+
+<!-- SCREEN 2: dashboard -->
+<div id="app" class="screen"><div class="wrap">
+  <header class="top rise"><div><div class="brand sm"><span class="logo" data-logo></span><span class="word">Saathi<b>Care</b></span></div><p class="hello" id="hello"></p><p class="sub" id="sub"></p></div>
+    <div class="ctl"><button id="sizeBtn" aria-label="Increase text size">A+</button>
+    <select id="lang" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option></select><button id="bell" aria-label="Notifications" onclick="openNotes()"><svg class="ic"><use href="#i-bell"/></svg><i class="nd" id="nd"></i></button><span class="av sm" id="avatar"></span></div></header>
+  <nav class="side" id="side"></nav>
+  <div class="srch"><svg class="ic"><use href="#i-search"/></svg><input id="srch" placeholder="Search records, doctors..." aria-label="Search" onkeydown="if(event.key==='Enter')searchGo(this.value)"></div>
+  <div class="alert" id="alert" hidden></div>
+  <div id="p-dashboard">
+  <section class="ringcard rise"><div class="wheel"><div class="ring" id="ring"></div><button class="sos" onclick="triggerSOS()" aria-label="SOS emergency">SOS</button></div></section>
+  <section class="hero rise">
+    <button class="status" id="statusBtn" onclick="openOverview()"><span class="hw"><svg viewBox="2.6 3.4 18.8 18.2"><path d="M12 21s-9-5.5-9-12a5 5 0 019-3 5 5 0 019 3c0 6.5-9 12-9 12z"/></svg><span class="hs"><small>Health score</small><b id="score"></b></span></span><span><small>Health overview</small><b id="statusTxt"></b></span></button>
+    <svg class="ecg" viewBox="0 0 300 44"><path d="M0 22h72l8-15 10 30 10-24 8 9h60l8-13 10 26 10-20 6 7h88"/></svg>
+    <div class="quick"><button class="btn alt" onclick="startHealthCheck()"><svg class="ic"><use href="#i-test"/></svg>Health check</button><button class="btn alt" onclick="openReports('blood')"><svg class="ic"><use href="#i-reports"/></svg>Reports</button><button class="btn alt" onclick="openCab()"><svg class="ic"><use href="#i-cab"/></svg>Hospital</button><button class="btn alt" onclick="openFamily()"><svg class="ic"><use href="#i-family"/></svg>Family</button><button class="btn alt" onclick="focusCare()"><svg class="ic"><use href="#i-care"/></svg>Ask AI</button><button class="btn alt" onclick="navigate('appointments')"><svg class="ic"><use href="#i-cal"/></svg>Appointments</button><button class="btn alt" onclick="navigate('history')"><svg class="ic"><use href="#i-reports"/></svg>History</button></div>
+    <div class="feed"><i class="live"></i><span><b>Connected health</b> (simulated)<br><span id="feedTxt">Waiting for first reading...</span></span><button class="btn alt" onclick="simulateCritical()">Simulate alert</button></div>
+  </section>
+  <section class="grid rise" id="grid"></section>
+  <section class="card appt rise" id="apptCard"></section>
+  <section class="duo">
+    <div class="card rise" id="remCard"><h2>Reminders</h2><div class="bar"><i id="remBar"></i></div><p class="note" id="remTxt"></p><div id="remList"></div>
+      <form class="add" onsubmit="addReminder(event)"><input id="rt" placeholder="Add a reminder" aria-label="Reminder title"><input id="rtm" type="time" value="12:00" aria-label="Time"><button class="btn">Add</button></form></div>
+    
+  </section>
+  </div><div id="pageBody" hidden></div>
+  <p class="foot">Demo prototype. Not a medical device.</p>
+</div>
+<div id="bubble" hidden></div>
+<div class="dock"><button id="spk" aria-pressed="false" aria-label="Spoken replies" onclick="toggleSpeak()"><svg class="ic"><use href="#i-spk"/></svg></button>
+  <input id="ask" placeholder="Ask SaathiCare..." aria-label="Ask the assistant"><button aria-label="Voice input" onclick="listen()"><svg class="ic"><use href="#i-mic"/></svg></button>
+  <button class="go" aria-label="Send" onclick="submitAsk()"><svg class="ic"><use href="#i-send"/></svg></button></div>
+</div>
+
+<div class="ov" id="sheet" hidden><div class="panel" role="dialog" aria-modal="true"><div class="ph"><h3 id="pt"></h3><button onclick="closeSheet()" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button></div><div id="pb"></div></div></div>
+<div id="toast" role="status"></div>
+
+<script>
+/* ============ 1. DEMO DATA (everything the UI shows comes from here) ============ */
+const patient = { name: "" };
+const metrics = {   // ok = stable range, warn = needs-attention range (sample thresholds, not medical rules)
+  hr:   { label:"Heart rate", unit:"bpm", data:[72,74,71,76,78,75,73,74], ok:[50,100], warn:[40,120], tip:"Heart rate changes with activity, stress and rest." },
+  bp:   { label:"Blood pressure", unit:"mmHg", data:[118,121,117,122,119,120,118,121], data2:[78,80,77,81,79,80,78,80], ok:[90,130], warn:[80,160], tip:"Blood pressure is shown as systolic/diastolic." },
+  spo2: { label:"SpO₂", unit:"%", data:[98,97,98,97,96,97,98,97], ok:[95,100], warn:[90,100], tip:"SpO₂ estimates the oxygen level in your blood." },
+  temp: { label:"Temperature", unit:"°C", data:[36.6,36.8,36.7,36.9,36.8,36.7,36.8,36.7], ok:[36,37.5], warn:[35,39], tip:"Body temperature varies through the day." },
+  sleep:{ label:"Sleep", unit:"hrs", data:[6.5,7,6,7.5,6.8,7.2,6.9,7.1], ok:[6,9], warn:[4,10], tip:"Sleep is last night's total." },
+  stress:{label:"Stress", unit:"/100", data:[32,40,35,45,38,42,36,34], ok:[0,60], warn:[0,80], tip:"Stress is a sample wellness score." },
+  steps:{ label:"Steps", unit:"steps", data:[4200,5100,6300,5800,7000,6500,7200,7600], ok:[2000,14000], warn:[0,60000], goal:10000 },
+  water:{ label:"Water", unit:"glasses", data:[5,6,5,7,6,6,7,6], ok:[4,12], warn:[2,20], goal:8 },
+  weight:{ label:"Weight", unit:"kg", data:[71.2,71,71.1,70.9,71,70.8,70.9,70.8], ok:[50,90], warn:[40,130] }
+};
+const reportFor = { hr:"blood", bp:"bp", spo2:"spo2", temp:"doctor", sleep:"doctor", stress:"doctor", steps:"doctor", water:"doctor", weight:"doctor" };
+const reports = {
+  blood:{ title:"Blood report", date:"12 Sep 2026", rows:[["Hemoglobin","13.8 g/dL","Stable"],["Fasting glucose","104 mg/dL","Needs attention"],["Total cholesterol","188 mg/dL","Stable"]], note:"Sample values only. Discuss real results with your doctor." },
+  bp:   { title:"Blood pressure report", date:"01 Oct 2026", rows:[["Average","119/79 mmHg","Stable"],["Highest this week","122/81 mmHg","Stable"]], trend:"bp", note:"Wheel shows the dashboard's latest demo reading." },
+  spo2: { title:"SpO₂ history", date:"01 Oct 2026", rows:[["Average","97 %","Stable"],["Lowest this week","96 %","Stable"]], trend:"spo2", note:"Wheel shows the dashboard's latest demo reading." },
+  doctor:{ title:"Doctor report", date:"28 Sep 2026", rows:[["Visit type","Routine follow-up","Stable"],["Sample advice","Stay hydrated, keep walking","Stable"]], note:"Placeholder report text for the demo." }
+};
+const familyContacts = [
+  { name:"Riya Sen", role:"Daughter - emergency contact", tel:"+919000000001" },
+  { name:"Arun Sen", role:"Son", tel:"+919000000002" },
+  { name:"Dr. Mehta", role:"Family physician", tel:"+919000000003" }
+];
+const hospitals = [ { name:"Apollo Hospital", info:"Emergency, Cardiology", x:228, y:60 }, { name:"Fortis Hospital", info:"Emergency, General", x:70, y:150 }, { name:"Manipal Hospital", info:"Multispeciality", x:250, y:160 } ];   // example names, demo data
+const USER_POS = { x:150, y:105 };   // position on the demo map
+let appointments = load("sathi_appt", [{ doctor:"Dr. Ananya Sharma", spec:"Cardiology specialist", date:"03 October 2026", time:"04:00 PM", iso:"2026-10-03T16:00" }]);
+const doctors = { Cardiology:["Dr. Ananya Sharma","Dr. Rahul Verma"], "General medicine":["Dr. Mehta","Dr. Sen"], Neurology:["Dr. Kapoor"] };
+const TIMES = [["09:00","09:00 AM"],["11:30","11:30 AM"],["14:00","02:00 PM"],["16:00","04:00 PM"]];
+const timeline = [["03","Cardiology consultation","03 Oct 2026 - Dr. Ananya Sharma",null],["20","Blood test","20 Sep 2026 - Laboratory","blood"],["05","Prescription updated","05 Sep 2026 - General medicine",null]];
+let reminders = load("sathi_rem", [
+  { id:1, title:"Morning medication (demo)", time:"09:00", done:true },
+  { id:2, title:"Doctor appointment", time:"11:30", done:false },
+  { id:3, title:"Evening walk", time:"18:00", done:false },
+  { id:4, title:"Drink water", time:"20:00", done:false } ]);
+// Add a language here: copy one block and translate. The dropdown is in the HTML.
+const LANG = {
+  en:{ morning:"Good morning", afternoon:"Good afternoon", evening:"Good evening", ok:"Everything looks stable. Here's your health overview.", bad:"Some readings need attention." },
+  hi:{ morning:"सुप्रभात", afternoon:"नमस्कार", evening:"शुभ संध्या", ok:"सब कुछ स्थिर दिख रहा है। यह आपका स्वास्थ्य अवलोकन है।", bad:"कुछ रीडिंग पर ध्यान देने की जरूरत है।" }
+};
+const NAMES = ["Stable","Needs attention","Critical"], CLS = ["ok","warn","crit"], COLORS = ["#16a870","#f2a100","#e5233f"];
+const state = { page:"dashboard", report:"blood", metric:null, lang:"en", speak:false, loc:null };
+
+/* ============ 2. SMALL HELPERS ============ */
+const $ = id => document.getElementById(id);
+const ic = n => `<svg class="ic"><use href="#i-${n}"/></svg>`;
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function load(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+function toast(t, ms = 2800){ const el = $("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), ms); }
+function openPanel(title, html){ $("pt").textContent = title; $("pb").innerHTML = html; $("sheet").hidden = false; }
+function closeSheet(){ $("sheet").hidden = true; }
+$("sheet").onclick = e => { if(e.target.id === "sheet") closeSheet(); };
+document.onkeydown = e => { if(e.key === "Escape") closeSheet(); };
+
+/* ============ 3. HEALTH LOGIC ============ */
+const last = k => metrics[k].data.at(-1);
+function val(k){ const m = metrics[k]; return m.data2 ? last(k)+"/"+m.data2.at(-1) : last(k); }
+function statusOf(k, v){ const m = metrics[k];   // 0 stable, 1 attention, 2 critical
+  if(v >= m.ok[0] && v <= m.ok[1]) return 0;
+  return (v >= m.warn[0] && v <= m.warn[1]) ? 1 : 2; }
+const status = k => statusOf(k, last(k));
+const overall = () => Math.max(...Object.keys(metrics).map(status));
+// Health score (demo): stable readings score 90-100 depending on how central they are, attention = 70, critical = 30; then averaged
+function healthScore(){ const pts = Object.keys(metrics).map(k => { const m = metrics[k], s = status(k); if(s) return s === 1 ? 70 : 30;
+    const mid = (m.ok[0] + m.ok[1]) / 2, half = (m.ok[1] - m.ok[0]) / 2; return 100 - 10 * Math.min(1, Math.abs(last(k) - mid) / half); });
+  return Math.round(pts.reduce((a, b) => a + b) / pts.length); }
+function trend(k){ const a = metrics[k].data, d = a.at(-1) - a[0]; return d > a[0]*.03 ? "rising" : d < -a[0]*.03 ? "falling" : "steady"; }
+function explainMetric(k){ const m = metrics[k];
+  return `${m.label}: ${val(k)} ${m.unit}. ${NAMES[status(k)]}, trend ${trend(k)}. Informational only - consider contacting a healthcare professional if unsure.`; }
+function smooth(p){ let d = `M${p[0][0]},${p[0][1]}`;   // joins the points with soft curves
+  for(let i = 1; i < p.length; i++){ const mx = (p[i-1][0] + p[i][0]) / 2; d += ` C${mx},${p[i-1][1]} ${mx},${p[i][1]} ${p[i][0]},${p[i][1]}`; }
+  return d; }
+function spark(a, w=84, h=24){ const mn = Math.min(...a), mx = Math.max(...a);
+  const p = a.map((v,i) => [+(i/(a.length-1)*w).toFixed(1), +(h-3-(v-mn)/(mx-mn||1)*(h-6)).toFixed(1)]), d = smooth(p);
+  return `<svg class="sp" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><path d="${d} L${w},${h} L0,${h}Z" fill="url(#gfill)"/><path d="${d}" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>`; }
+function chart(a, b){ const w = 300, h = 84, all = b ? a.concat(b) : a, mn = Math.min(...all) - 1, mx = Math.max(...all) + 1;
+  const pts = arr => arr.map((v,i) => [+((i/(arr.length-1))*(w-40)+28).toFixed(1), +(h-12-((v-mn)/(mx-mn))*(h-26)).toFixed(1)]);
+  const line = (arr, c, fill, nm) => { const p = pts(arr), d = smooth(p), e = p.at(-1);
+    return (fill ? `<path d="${d} L${e[0]},${h-8} L${p[0][0]},${h-8}Z" fill="url(#gfill)"/>` : "") + `<path d="${d}" fill="none" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/><circle cx="${e[0]}" cy="${e[1]}" r="4" fill="${c}" stroke="#fff" stroke-width="2"/>` + p.map((q, i) => `<circle cx="${q[0]}" cy="${q[1]}" r="9" fill="transparent" onclick="toast('${nm} - reading ${i+1}: ${arr[i]}')"/>`).join(""); };
+  return `<svg class="chart" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" rx="20" fill="var(--surf)"/><g stroke="var(--line)" stroke-dasharray="3 4"><line x1="28" x2="${w-12}" y1="${h*.3}" y2="${h*.3}"/><line x1="28" x2="${w-12}" y1="${h*.65}" y2="${h*.65}"/></g><g fill="var(--mut)" font-size="9"><text x="8" y="16">${Math.round(mx)}</text><text x="8" y="${h-10}">${Math.round(mn)}</text></g>${line(a,"#1d4ed8",true,b ? "Systolic" : "Value")}${b ? line(b,"#ff4f8b",false,"Diastolic") : ""}</svg>`; }
+/* every metric is drawn as a ring, like the care wheel: the arc shows where the value sits inside its range */
+function gauge(k, i = metrics[k].data.length - 1){ const m = metrics[k], v = m.data[i], v2 = m.data2 ? m.data2[i] : null;
+  const f = Math.min(1, Math.max(0, m.goal ? v / m.goal : (v - m.warn[0]) / (m.warn[1] - m.warn[0]))), C = 276.5, col = COLORS[statusOf(k, v)];
+  return `<svg class="gauge" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="var(--line)" stroke-width="8"/><circle cx="50" cy="50" r="44" fill="none" stroke="${col}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${(f*C).toFixed(1)} ${C}" transform="rotate(-90 50 50)"/><circle cx="50" cy="50" r="33" fill="none" stroke="var(--line)" stroke-dasharray="2 5"/><text x="50" y="54" text-anchor="middle" font-size="${v2 ? 17 : 22}" font-weight="700" fill="var(--ink)">${v2 ? v + "/" + v2 : v}</text><text x="50" y="68" text-anchor="middle" font-size="9" fill="var(--mut)">${m.unit}</text></svg>`; }
+
+/* ============ 4. DASHBOARD RENDERING ============ */
+function renderHeader(){ const h = new Date().getHours(), t = LANG[state.lang];
+  $("hello").innerHTML = `${h < 12 ? t.morning : h < 17 ? t.afternoon : t.evening}, <b></b>`;
+  $("hello").querySelector("b").textContent = patient.name; $("avatar").textContent = (patient.name[0] || "S").toUpperCase(); }
+function updateStatus(){ const s = overall(); countTo($("score"), healthScore()); $("statusTxt").style.color = COLORS[s];
+  $("statusTxt").textContent = NAMES[s]; $("statusBtn").style.setProperty("--c", COLORS[s]);
+  $("sub").textContent = LANG[state.lang][s ? "bad" : "ok"]; }
+function renderGrid(flashKey){
+  $("grid").innerHTML = Object.keys(metrics).map(k => { const m = metrics[k];
+    return `<button class="m ${state.metric === k ? "act" : ""} ${flashKey === k ? "flash" : ""}" onclick="showMetric('${k}')"><span class="mh"><i class="dot ${CLS[status(k)]}"></i>${m.label}</span>${gauge(k)}${spark(m.data)}<small>${NAMES[status(k)]}</small></button>`; }).join(""); }
+function showMetric(k){ state.metric = k; renderGrid(); const m = metrics[k], n = m.data.length;
+  const recent = [0,1,2,3].map(j => `<div class="rc">${gauge(k, n-1-j)}<small>${j ? j + " ago" : "Latest"}</small></div>`).join("");
+  openPanel(m.label, `<div class="bigw">${gauge(k)}<i class="chip ${CLS[status(k)]}">${NAMES[status(k)]}</i></div>
+  ${chart(m.data, m.data2)}<p class="note">Trend: ${trend(k)} (simulated)</p><div class="rcs">${recent}</div>
+  <div class="acts"><button class="btn" onclick="handleAssistantCommand('Explain this reading')">Ask AI to explain</button><button class="btn alt" onclick="openReports('${reportFor[k]}')">View history</button><button class="btn alt" onclick="contactFamily()">Contact caregiver</button><button class="btn red" onclick="triggerSOS()">Emergency assistance</button></div>`); }
+function openOverview(){
+  const rows = Object.keys(metrics).map(k => `<div class="row"><span>${metrics[k].label}</span><span>${val(k)} ${metrics[k].unit} <i class="chip ${CLS[status(k)]}">${NAMES[status(k)]}</i></span></div>`).join("");
+  openPanel("Health overview", `<p class="note">Based on latest readings. Demo only, not a diagnosis.</p>${rows}
+  ${overall() ? `<div class="acts"><button class="btn alt" onclick="contactFamily()">Contact caregiver</button><button class="btn red" onclick="triggerSOS()">Emergency assistance</button></div>` : ""}`); }
+
+/* ============ 5. CONNECTED HEALTH (simulated device) ============ */
+// INTEGRATION POINT: replace readDevice() with a real device/API call that returns {k, v, v2}.
+function readDevice(only){ const keys = ["hr","spo2","bp","temp","steps"].filter(x => !(x === "hr" && state.btHR)), k = only || keys[Math.floor(Math.random()*keys.length)], m = metrics[k];
+  const step = { hr:3, spo2:1, bp:3, temp:.1, steps:120 }[k], clamp = (v, r) => Math.min(r[1], Math.max(r[0], v));
+  const nv = (v, r) => clamp(v + (Math.random()*2-1)*step, k === "spo2" ? [95,100] : r);
+  const f = k === "temp" ? v => +v.toFixed(1) : Math.round;
+  return { k, v:f(nv(last(k), m.ok)), v2: m.data2 ? Math.round(nv(m.data2.at(-1), [60,85])) : null }; }
+function pushReading(k, v, v2){ const m = metrics[k]; m.data.push(v); m.data.shift(); if(m.data2){ m.data2.push(v2); m.data2.shift(); }
+  renderGrid(k); updateStatus(); if(state.page === "devices" || state.page === "health") renderPage();
+  $("feedTxt").textContent = `${m.label}: ${val(k)} ${m.unit} - updated ${new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"})} (${k === "hr" && state.btHR ? "live Bluetooth" : "simulated"})`;
+  if(status(k) === 2) showAlert(k); }
+function simulateCritical(){ pushReading("spo2", 86); }
+function showAlert(k){ addNote("Health alert: " + metrics[k].label + " " + val(k)); const a = $("alert"); a.hidden = false;   // family alert workflow (simulated)
+  a.innerHTML = `<b>Health alert detected: ${metrics[k].label} ${val(k)} ${metrics[k].unit}</b><button class="btn" onclick="showMetric('${k}')">View reading</button><button class="btn" onclick="contactFamily()">Contact family</button><button class="btn" onclick="triggerSOS()">Open emergency assistance</button><button class="btn" onclick="$('alert').hidden=true">Dismiss</button>`; }
+function contactFamily(){ const c = familyContacts[0]; addNote("Message to " + c.name + " opened"); toast("Opening a message to " + c.name + ". Press send in your messages app.");
+  location.href = "sms:" + c.tel + "?&body=" + encodeURIComponent(`Hi ${c.name}, this is ${patient.name}. Please check on me. My health score is ${$("score").textContent}/100.`); }
+
+/* ============ 6. REMINDERS ============ */
+function renderReminders(){ const done = reminders.filter(r => r.done).length;
+  $("remList").innerHTML = reminders.map(r => `<div class="rm ${r.done ? "done" : ""}"><button class="chk" onclick="completeReminder(${r.id})" aria-label="Toggle complete">${ic("ok")}</button><div><b>${esc(r.title)}</b><small>${r.time} - ${r.done ? "Completed" : "Pending"}</small></div></div>`).join("");
+  $("remTxt").textContent = `${done} of ${reminders.length} done`;
+  $("remBar").style.width = (reminders.length ? done/reminders.length*100 : 0) + "%"; save("sathi_rem", reminders); }
+function completeReminder(id){ const r = reminders.find(x => x.id === id); r.done = !r.done; renderReminders(); if(r.done) toast("Marked complete: " + r.title); }
+function addReminder(e){ e.preventDefault(); const t = $("rt").value.trim(); if(!t) return toast("Type a reminder title first.");
+  reminders.push({ id:Date.now(), title:t, time:$("rtm").value || "12:00", done:false }); $("rt").value = ""; renderReminders(); }
+
+/* ============ 7. CARE WHEEL + PANELS ============ */
+const nav = [["family","Family",openFamily],["reports","Reports",() => openReports("blood")],["test","Test",startHealthCheck],["cab","Cab",openCab],["care","Care",focusCare],["meds","Meds",openMeds],["doctor","Doctor",() => navigate("doctors")]];
+function renderRing(){ $("ring").innerHTML = nav.map((n,i) => `<button class="rb" style="--a:${i*360/nav.length}deg" onclick="navTo(${i})" aria-label="${n[1]}">${ic(n[0])}<span>${n[1]}</span></button>`).join(""); }
+let wheelAngle = 0, wheelPaused = false, wheelLast = 0, wheelOn = false;
+function startWheel(){ if(wheelOn) return; wheelOn = true;
+  const w = document.querySelector(".wheel"), canHover = matchMedia("(hover: hover)").matches;
+  w.addEventListener("pointerdown", () => wheelPaused = true);   // stop while a finger is down so taps always land
+  ["pointerup", "pointercancel", "pointerleave"].forEach(e => w.addEventListener(e, () => wheelPaused = false));
+  if(canHover){ w.addEventListener("mouseenter", () => wheelPaused = true); w.addEventListener("mouseleave", () => wheelPaused = false); }
+  const spin = t => { if(!wheelPaused && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+      wheelAngle = (wheelAngle + (t - wheelLast) * 0.006) % 360;   // 0.006 deg per ms = one turn per minute
+      $("ring").style.setProperty("--spin", wheelAngle.toFixed(2) + "deg"); }
+    wheelLast = t; requestAnimationFrame(spin); };
+  requestAnimationFrame(spin); }
+function navTo(i){ document.querySelectorAll(".rb").forEach((b,j) => b.classList.toggle("on", i === j)); setTimeout(nav[i][2], 250); }
+
+function openMeds(){ navigate("meds"); }
+function openFamily(){ navigate("family"); }
+function openCab(){ navigate("cab"); }
+function startHealthCheck(){ navigate("test"); }
+function openReports(id){ if(id) state.report = id; state.page === "reports" ? renderPage() : navigate("reports"); }
+
+/* Test page: runs the 4 checks, then WRITES the new readings into the dashboard data and saves a report */
+async function runCheck(low){
+  const steps = [["Blood pressure","bp"],["Heart rate","hr"],["SpO₂","spo2"],["Temperature","temp"]];
+  const rnd = (a, b, d = 0) => +(a + Math.random() * (b - a)).toFixed(d);
+  const vals = { bp:[rnd(112,126), rnd(74,82)], hr:[rnd(66,84)], spo2:[low ? 93 : rnd(96,99)], temp:[rnd(36.5,37.1,1)] };   // simulated readings
+  $("tc").innerHTML = '<div id="hc"></div><div id="hcRes"></div>'; const rows = [];
+  for(const [n, k] of steps){ if(!$("hc")) return;
+    const row = document.createElement("div"); row.className = "row"; row.innerHTML = `<span>${n}</span><span class="bar w"><i></i></span>`; $("hc").append(row);
+    const bar = row.querySelector("i"); bar.style.transition = "width 1s linear"; requestAnimationFrame(() => bar.style.width = "100%");
+    await sleep(1050);
+    pushReading(k, vals[k][0], vals[k][1]);   // updates dashboard card, wheel, graph and health score
+    const st = status(k); rows.push([n, `${val(k)} ${metrics[k].unit}`, NAMES[st]]);
+    row.lastChild.outerHTML = `<span>${val(k)} ${metrics[k].unit} <i class="chip ${CLS[st]}">${NAMES[st]}</i></span>`; }
+  addNote("Health check completed"); reports.check = { title:"Latest health check", date:new Date().toLocaleString("en-GB", { day:"2-digit", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" }), rows };
+  if(!$("hcRes")) return; const bad = rows.some(r => r[2] !== "Stable");
+  $("hcRes").innerHTML = `<h2 style="margin-top:12px">Health check completed</h2><p class="note">${bad ? "One reading needs attention. Consider contacting a healthcare professional." : "All readings stable."}</p>
+    <div class="acts"><button class="btn" onclick="openReports('check')">View my reports</button><button class="btn alt" onclick="navigate('doctors')">Contact doctor</button>${bad ? '<button class="btn red" onclick="triggerSOS()">Emergency assistance</button>' : ""}</div>`; }
+
+/* location + map. INTEGRATION POINT: swap the SVG map for Leaflet + OpenStreetMap tiles and a routing API (e.g. OSRM). */
+function getLocation(cb){ if(!navigator.geolocation) return cb(null);
+  navigator.geolocation.getCurrentPosition(p => cb({ lat:p.coords.latitude, lng:p.coords.longitude }), () => cb(null), { timeout:6000 }); }
+const dist = h => Math.hypot(h.x - USER_POS.x, h.y - USER_POS.y);
+const nearest = () => [...hospitals].sort((a,b) => dist(a) - dist(b))[0];
+function mapSVG(n){ const pins = hospitals.map(h => `<g transform="translate(${h.x} ${h.y})"><circle r="9" fill="${h === n ? "#e5233f" : "#8a97b3"}"/><path d="M0-5v10M-5 0h10" stroke="#fff" stroke-width="2.5"/></g>`).join("");
+  return `<svg class="map" viewBox="0 0 300 200"><path d="M0 105H300M150 0V200M0 40L300 170M60 0L240 200" stroke="var(--line)" stroke-width="7" fill="none"/><line class="route" x1="${USER_POS.x}" y1="${USER_POS.y}" x2="${n.x}" y2="${n.y}"/>${pins}<circle cx="${USER_POS.x}" cy="${USER_POS.y}" r="8" fill="#2f6bff" stroke="#fff" stroke-width="3"/></svg>`; }
+function locateMe(){ getLocation(l => { state.loc = l; if(!$("locTxt")) return;
+  $("locTxt").textContent = l ? `Location found (${l.lat.toFixed(3)}, ${l.lng.toFixed(3)}). Hospitals are demo data.` : "Location unavailable. Using demo location."; }); }
+async function shareLocation(){ const l = state.loc, where = l ? `${l.lat.toFixed(4)}, ${l.lng.toFixed(4)}` : "demo location (location not shared)";
+  const text = `SaathiCare SOS (demo): ${patient.name} may need help. Location: ${where}`;
+  try{ if(navigator.share){ await navigator.share({ text }); return; } await navigator.clipboard.writeText(text); toast("Message copied. Paste it into any chat."); }
+  catch(e){ toast("Sharing unavailable here. Demo message: " + text); } }
+
+/* SOS: confirmation panel first, nothing is dialled automatically */
+function triggerSOS(){ const c = familyContacts[0];
+  openPanel("Emergency assistance", `<div class="sosbox"><b>Nothing is dialled until you choose.</b> Not a replacement for emergency services.</div><div id="hold"><button class="holdbtn" id="holdBtn" oncontextmenu="return false" onpointerdown="holdSOS(true)" onpointerup="holdSOS(false)" onpointerleave="holdSOS(false)" onpointercancel="holdSOS(false)"><i id="holdBar"></i><span id="holdTxt">Hold 3 seconds to send SOS alert</span></button></div><ol class="tl" id="tl"><li>SOS pressed. Waiting for your choice.</li></ol>
+  <div class="acts"><a class="btn red" href="tel:${c.tel}">Call emergency contact</a><a class="btn red" href="tel:112">Call ambulance (112)</a><button class="btn" onclick="openCab()">Find nearest hospital</button><button class="btn" onclick="shareLocation()">Share location</button><button class="btn alt" onclick="closeSheet()">Cancel</button></div>`);
+  getLocation(l => { if(!$("tl")) return; state.loc = l; const add = t => $("tl").insertAdjacentHTML("beforeend", `<li>${t}</li>`);
+    add(l ? `Location retrieved (${l.lat.toFixed(3)}, ${l.lng.toFixed(3)})` : "Location unavailable. Using demo location.");
+    add(`Nearest healthcare location: ${nearest().name} (demo data)`); add(`Emergency contact ready: ${c.name}`); }); }
+
+/* ============ 8. AI ASSISTANT: input -> intent -> app function -> reply ============ */
+// INTEGRATION POINT: for a real AI, send the text plus current metrics to your own backend in the fallback branch.
+const SUGG = ["Show my blood reports","What is my heart rate?","Show my health summary","Show my reminders","Call my family","Find a nearby hospital","Start a health check"];
+const describe = k => `Your ${metrics[k].label} is ${val(k)} ${metrics[k].unit} (${NAMES[status(k)]}, ${trend(k)}).`;
+const intents = [
+  { w:["explain"], run:() => explainMetric(state.metric || "hr") },
+  { w:["report"], run:() => { openReports("blood"); return "Here is your blood report (demo data)."; } },
+  { w:["heart","pulse"], run:() => { showMetric("hr"); return describe("hr"); } },
+  { w:["spo","oxygen"], run:() => { showMetric("spo2"); return describe("spo2"); } },
+  { w:["blood pressure","bp"], run:() => { showMetric("bp"); return describe("bp"); } },
+  { w:["summary","overview"], run:() => { openOverview(); return `Overall demo status: ${NAMES[overall()]}. Opening your health overview.`; } },
+  { w:["reminder","medicine","medication"], run:() => { closeSheet(); $("remCard").scrollIntoView({ behavior:"smooth" }); const p = reminders.filter(r => !r.done).length; return `You have ${p} pending reminder${p === 1 ? "" : "s"} out of ${reminders.length}.`; } },
+  { w:["sos","emergency","ambulance"], run:() => { triggerSOS(); return "Opening emergency assistance. Nothing is dialled until you choose."; } },
+  { w:["family","call"], run:() => { openFamily(); return "Here are your trusted contacts."; } },
+  { w:["hospital","cab","map"], run:() => { openCab(); return `Nearest healthcare location in the demo map: ${nearest().name}.`; } },
+  { w:["step"], run:() => { showMetric("steps"); return describe("steps"); } },
+  { w:["doctor","appointment"], run:() => { navigate("appointments"); return "Opening appointments."; } },
+  { w:["history"], run:() => { navigate("history"); return "Opening your medical history."; } },
+  { w:["device","watch"], run:() => { navigate("devices"); return "Opening connected devices (simulated)."; } },
+  { w:["check","test"], run:() => { startHealthCheck(); return "Starting a guided health check (simulated readings)."; } }
+];
+function say(t, chips){ const b = $("bubble"); b.hidden = false;
+  b.innerHTML = `<button class="bx" onclick="$('bubble').hidden=true">Close</button><p></p><div class="chips"></div>`; b.querySelector("p").textContent = t;
+  if(chips) SUGG.forEach(s => { const c = document.createElement("button"); c.textContent = s; c.onclick = () => handleAssistantCommand(s); b.querySelector(".chips").append(c); });
+  if(state.speak && "speechSynthesis" in window){ speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(t)); } }
+function handleAssistantCommand(raw){ const t = raw.toLowerCase(), hit = intents.find(i => i.w.some(w => t.includes(w)));
+  hit ? say(hit.run()) : say("Try one of these:", true); }
+function submitAsk(){ const v = $("ask").value.trim(); if(!v) return; $("ask").value = ""; handleAssistantCommand(v); }
+$("ask").onkeydown = e => { if(e.key === "Enter") submitAsk(); };
+function focusCare(){ say(`Hi ${patient.name}. Try asking:`, true); $("ask").focus(); }
+function listen(){ const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR) return toast("Voice input is not supported in this browser. You can type instead.");
+  try{ const r = new SR(); r.onresult = e => handleAssistantCommand(e.results[0][0].transcript); r.onerror = () => toast("Could not hear you. Please try typing."); r.start(); toast("Listening..."); }catch(e){ toast("Voice input unavailable."); } }
+function toggleSpeak(){ state.speak = !state.speak; $("spk").setAttribute("aria-pressed", state.speak);
+  toast(!("speechSynthesis" in window) ? "Spoken replies are not supported in this browser." : "Spoken replies " + (state.speak ? "on" : "off")); }
+
+/* ============ 9. START-UP: sign-in, transition, controls ============ */
+patient.name = load("sathi_name", ""); $("name").value = patient.name;
+const setErr = (id, msg) => $(id).textContent = msg;
+$("siForm").onsubmit = e => { e.preventDefault();
+  const n = $("name").value.trim(), p = $("phone").value.replace(/\D/g, "");
+  setErr("eName", n.length < 2 ? "Please enter your name." : ""); setErr("ePhone", p.length < 10 ? "Enter a 10 digit phone number." : "");
+  if(n.length < 2 || p.length < 10){ const f = $("siForm"); f.classList.remove("shake"); void f.offsetWidth; f.classList.add("shake"); return; }
+  patient.name = n; save("sathi_name", n); enterApp(); };
+function enterApp(){ $("signin").classList.add("leave");   // fade the card out, then bring the dashboard in
+  setTimeout(() => { $("signin").classList.remove("on"); showLoader("Preparing your health space...", 1400, () => { $("app").classList.add("on"); document.body.classList.add("in");
+    document.querySelectorAll(".rise").forEach((el,i) => el.style.setProperty("--i", i));
+    renderHeader(); renderGrid(); updateStatus(); renderReminders(); renderRing(); startWheel(); renderNav(); renderApptCard(); startLiveFeed(); setTimeout(startNavScroll, 100); }); }, 450); }
+function startLiveFeed(){ setInterval(() => { const r = readDevice(); pushReading(r.k, r.v, r.v2); }, 4000); setInterval(checkReminders, 15000); checkReminders(); }
+const sizes = [19, 21, 23];  let sizeIdx = 0;
+$("sizeBtn").onclick = () => { sizeIdx = (sizeIdx + 1) % 3; document.documentElement.style.fontSize = sizes[sizeIdx] + "px"; toast("Text size: " + ["Normal","Large","Largest"][sizeIdx]); };
+$("lang").onchange = e => { state.lang = e.target.value; document.documentElement.lang = state.lang; renderHeader(); updateStatus(); translateDom(document.body); };
+/* ============ 10. PAGES (sidebar / tab navigation, ported from the MediCare template) ============ */
+const PAGES = [["dashboard","Dashboard","home"],["health","Health","heart"],["emergency","Emergency","alert"],["hospitals","Hospitals","pin"],["appointments","Appointments","cal"],["history","Medical history","reports"],["devices","Devices","device"],["settings","Settings","gear"]];
+const head = (e, t) => `<button class="btn alt back" onclick="navigate('dashboard')">${ic("home")}Home</button><p class="eyebrow">${e}</p><h2 class="pt">${t}</h2>`;
+const tile = (i, t, sub, go) => `<button class="tile" onclick="${go}"><span class="ti">${ic(i)}</span><b>${t}</b><small>${sub}</small></button>`;
+const initials = n => n.split(" ").slice(-2).map(w => w[0]).join("");
+const apptBlock = a => `<div class="row"><span style="display:flex;gap:10px;align-items:center"><span class="av">${initials(a.doctor)}</span><span><b>${a.doctor}</b><br><span class="note">${a.spec}</span></span></span><span class="note" style="text-align:right">${a.date}<br>${a.time}</span></div>`;
+const hospRows = q => hospitals.filter(h => (h.name + h.info).toLowerCase().includes(q.toLowerCase())).map(h => tile("pin", h.name, `${(dist(h)/12).toFixed(1)} km (demo) - ${h.info}`, "openCab()")).join("") || '<p class="note">No match.</p>';
+const pages = {
+  health: () => head("Health monitoring", "Your health") + `<div class="card"><div class="row"><b>Live heart rate</b><span><b>${val("hr")}</b> bpm</span></div>${chart(metrics.hr.data)}</div>
+    <div class="card"><h2>Monitoring</h2><div class="row"><span>Last check</span><b>Just now</b></div><div class="row"><span>Devices</span><b>3 connected (simulated)</b></div><div class="acts"><button class="btn" onclick="navigate('devices')">View devices</button><button class="btn alt" onclick="startHealthCheck()">Run health check</button></div></div>
+    <div class="card"><h2>All readings</h2>${Object.keys(metrics).map(k => `<div class="row" style="cursor:pointer" onclick="showMetric('${k}')"><span>${metrics[k].label}</span><span>${val(k)} ${metrics[k].unit} <i class="chip ${CLS[status(k)]}">${NAMES[status(k)]}</i></span></div>`).join("")}</div>`,
+  emergency: () => head("Emergency services", "Emergency assistance") + `<div class="sosrow"><div><b>Need help now?</b><p class="note">Nothing is dialled until you choose.</p></div><button class="btn red" onclick="triggerSOS()">${ic("alert")}Activate SOS</button></div>
+    <div class="card" style="margin-top:10px"><h2>Emergency contacts</h2>${familyContacts.map(c => `<div class="row"><span><b>${c.name}</b><br><span class="note">${c.role}</span></span><a class="btn" href="tel:${c.tel}">Call</a></div>`).join("")}</div>
+    <div class="tiles">${tile("pin","Find hospital","Nearest on map","openCab()")}${tile("cab","Share location","Copy or send","shareLocation()")}${tile("alert","Call ambulance","Dials 112","location.href='tel:112'")}</div>`,
+  hospitals: () => head("Healthcare locator", "Find a hospital") + `<input class="field" id="hq" placeholder="Search hospitals or specialties..." oninput="filterHosp()" aria-label="Search hospitals">
+    <div class="tiles">${tile("pin","Use my location","Find hospitals near you","openCab();locateMe()")}${tile("alert","Emergency hospitals","With emergency care","$('hq').value='emergency';filterHosp()")}</div>
+    <h3>Nearby hospitals (demo)</h3><div class="tiles" id="hl">${hospRows("")}</div>`,
+  appointments: () => head("Appointments", "Appointments") + `<div class="card"><h2>Your appointments</h2>${[...appointments].sort((a, b) => a.iso < b.iso ? -1 : 1).map(a => apptBlock(a)).join("")}</div>
+    <div class="card"><h2>Book new appointment</h2><div class="form"><select class="field" id="apSpec" onchange="fillDocs()" aria-label="Speciality">${Object.keys(doctors).map(x => `<option>${x}</option>`).join("")}</select><select class="field" id="apDoc" aria-label="Doctor"></select><input class="field" id="apDate" type="date" min="${new Date().toISOString().slice(0, 10)}" aria-label="Date"><select class="field" id="apTime" aria-label="Time">${TIMES.map(t => `<option value="${t[0]}">${t[1]}</option>`).join("")}</select></div><button class="btn full" onclick="bookAppointment()">Book appointment</button></div>`,
+  history: () => head("Patient records", "Medical history") + `<div class="stats">${[["Blood group","O+"],["Allergies","None"],["Active medications","2"],["Reports",Object.keys(reports).length]].map(x => `<div class="card"><small class="note">${x[0]}</small><div class="big">${x[1]}</div></div>`).join("")}</div>
+    <div class="card" style="margin-top:10px"><h2>Medical timeline</h2>${timeline.map(t => `<div class="row" ${t[3] ? `style="cursor:pointer" onclick="openReports('${t[3]}')"` : ""}><span style="display:flex;gap:10px;align-items:center"><span class="av">${t[0]}</span><span><b>${t[1]}</b><br><span class="note">${t[2]}</span></span></span></div>`).join("")}</div>`,
+  devices: () => head("Connected health devices", "Medical devices") + `<div class="tiles">${tile("device", state.btHR ? "Band connected (live)" : "Connect heart-rate band", "Real Bluetooth reading", "connectHR()")}${tile("device","Smart watch",`Connected - ${val("hr")} bpm`,"syncDevice('hr','Smart watch')")}${tile("heart","Pulse oximeter",`Connected - SpO₂ ${val("spo2")} %`,"syncDevice('spo2','Pulse oximeter')")}${tile("test","Thermometer",`Connected - ${val("temp")} °C`,"syncDevice('temp','Thermometer')")}</div>
+    <div class="card" style="margin-top:10px"><h2>Monitoring status</h2><div class="row"><span>Devices</span><b>3 (simulated)</b></div><div class="row"><span>Last sync</span><b>Just now</b></div><p class="note">Demo feed. A real integration would replace readDevice().</p></div>`,
+  settings: () => head("Account", "Settings") + `<div class="tiles">${tile("family","Profile","Edit your name","openProfile()")}${tile("care","Notifications","Health alerts","openAlertSettings()")}${tile("alert","Emergency contacts","Manage contacts","openFamily()")}${tile("test","Privacy and security","Data stays on this device","openPrivacy()")}</div><button class="btn alt full" onclick="location.reload()">Sign out</button>`
+};
+function renderNav(){ const side = $("side");
+  if(!side.firstChild){   // built once, so the moving strip never restarts; the second copy makes the loop seamless
+    const set = dup => PAGES.map(p => `<button data-p="${p[0]}" class="${p[0] === "emergency" ? "em" : ""}${dup ? " dup" : ""}" ${dup ? 'tabindex="-1" aria-hidden="true"' : ""} onclick="navigate('${p[0]}')">${ic(p[2])}${p[1]}</button>`).join("")
+      + `<button class="${dup ? "dup" : ""}" ${dup ? 'tabindex="-1" aria-hidden="true"' : ""} onclick="openSupport()">${ic("care")}Support</button>`;
+    side.innerHTML = `<div class="track">${set(false)}${set(true)}</div>`; }
+  side.querySelectorAll("[data-p]").forEach(b => b.classList.toggle("on", b.dataset.p === state.page)); }
+function renderPage(anim){ if(state.page === "dashboard") return;
+  $("pageBody").innerHTML = `<div class="${anim ? "slide" : ""}">${pages[state.page]()}</div>`; if(state.page === "appointments"){ fillDocs(); if(state.pref){ $("apSpec").value = state.pref[0]; fillDocs(); $("apDoc").value = state.pref[1]; state.pref = null; } } }
+function navigate(p){ state.page = p;   // pages cross-fade smoothly where the browser supports View Transitions
+  const go = () => { closeSheet(); $("p-dashboard").hidden = p !== "dashboard"; $("pageBody").hidden = p === "dashboard"; renderNav(); renderPage(true); scrollTo({ top:0 }); };
+  document.startViewTransition ? document.startViewTransition(go) : go(); }
+function filterHosp(){ $("hl").innerHTML = hospRows($("hq").value); }
+function fillDocs(){ $("apDoc").innerHTML = doctors[$("apSpec").value].map(d => `<option>${d}</option>`).join(""); }
+function nextAppt(){ const now = new Date().toISOString().slice(0, 16), a = [...appointments].sort((x, y) => x.iso < y.iso ? -1 : 1); return a.find(x => x.iso >= now) || a.at(-1); }
+function renderApptCard(){ $("apptCard").innerHTML = `<h2>Upcoming appointment</h2>${apptBlock(nextAppt())}<button class="btn alt full" onclick="navigate('appointments')">View appointments</button>`; }
+function bookAppointment(){ const d = $("apDate").value; if(!d) return toast("Please choose a date.");
+  const t = TIMES.find(x => x[0] === $("apTime").value), doc = $("apDoc").value;
+  appointments.push({ doctor:doc, spec:$("apSpec").value + " specialist", date:new Date(d + "T00:00").toLocaleDateString("en-GB", { day:"2-digit", month:"long", year:"numeric" }), time:t[1], iso:d + "T" + t[0] });
+  save("sathi_appt", appointments); addNote("Appointment booked with " + doc); reminders.push({ id:Date.now(), title:"Appointment: " + doc, time:t[0], done:false });
+  renderReminders(); renderApptCard(); renderPage(); toast("Appointment request saved (demo)."); }
+function openProfile(){ openPanel("Profile", `<input class="field" id="pn" value="${esc(patient.name)}" aria-label="Name"><button class="btn full" onclick="saveProfile()">Save</button>`); }
+function saveProfile(){ const n = $("pn").value.trim(); if(n.length < 2) return toast("Please enter a name.");
+  patient.name = n; save("sathi_name", n); renderHeader(); closeSheet(); toast("Profile saved."); }
+function searchGo(q){ q = q.toLowerCase(); $("srch").value = "";
+  const hit = [["history","record|report|history|blood"],["appointments","doctor|appoint|cardio"],["hospitals","hospital|clinic"],["devices","device|watch"],["health","heart|oxygen|health"]].find(x => new RegExp(x[1]).test(q));
+  hit ? navigate(hit[0]) : handleAssistantCommand(q); }
+
+/* ============ 11. WHEEL PAGES: Reports, Test, Cab, Doctors, Family, Meds ============ */
+const gm = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);   // opens Google Maps, no API key needed
+const bookWith = (spec, name) => { state.pref = [spec, name]; navigate("appointments"); };
+const contactRow = (name, sub, tel) => `<div class="row"><span style="display:flex;gap:10px;align-items:center"><span class="av">${initials(name)}</span><span><b>${name}</b><br><span class="note">${sub}</span></span></span><span class="acts" style="margin:0"><a class="btn" href="tel:${tel}">Call</a><a class="btn alt" href="https://meet.google.com/new" target="_blank" rel="noopener">Video</a><a class="btn alt" href="sms:${tel}">Message</a>`;
+Object.assign(pages, {
+  test: () => head("Health check", "Test now") + `<div class="card" id="tc"><p class="note">Checks blood pressure, heart rate, SpO₂ and temperature (simulated readings). Results update your dashboard.</p><div class="acts"><button class="btn" onclick="runCheck()">Start test now</button><button class="btn alt" onclick="runCheck(true)">Demo: low SpO₂</button></div></div>`,
+  reports: () => { const r = reports[state.report] || reports.blood;
+    return head("My reports", "Reports") + `<div class="acts" style="margin:0 0 8px">${Object.keys(reports).map(k => `<button class="btn ${reports[k] === r ? "" : "alt"}" onclick="openReports('${k}')">${reports[k].title}</button>`).join("")}</div>
+    <div class="card"><div class="row"><b>${r.title}</b><span class="note">${r.date}</span></div>${r.rows.map(x => `<div class="row"><span>${x[0]}</span><span>${x[1]} <i class="chip ${CLS[NAMES.indexOf(x[2])]}">${x[2]}</i></span></div>`).join("")}${r.trend ? '<div class="bigw">' + gauge(r.trend) + '</div>' + chart(metrics[r.trend].data, metrics[r.trend].data2) : ""}<p class="note">Demo data.</p>
+    <div class="acts"><button class="btn" onclick="navigate('doctors')">Contact doctor</button><button class="btn alt" onclick="startHealthCheck()">Run a new test</button></div></div>`; },
+  doctors: () => head("Your doctors", "Doctors") + `<div class="card">${Object.entries(doctors).flatMap(([spec, names]) => names.map(n => [n, spec])).map((d, i) =>
+    contactRow(d[0], d[1] + ' - <i class="chip">Available (demo)</i>', "+91900000" + (2001 + i)) + `<button class="btn alt" onclick="bookWith('${d[1]}','${d[0]}')">Book</button></span></div>`).join("")}</div><p class="note">Phone numbers are placeholders. Video opens Google Meet in a new tab.</p>`,
+  family: () => head("Trusted contacts", "Family") + `<div class="card">${familyContacts.map(c => contactRow(c.name, c.role, c.tel) + `</span></div>`).join("")}</div><p class="note">Video opens Google Meet in a new tab.</p>`,
+  meds: () => head("Medication", "Reminders") + `<div class="card">${reminders.map(r => `<div class="row"><span>${esc(r.title)} <small class="note">${r.time}</small></span><button class="btn ${r.done ? "alt" : ""}" onclick="completeReminder(${r.id});renderPage()">${r.done ? "Done" : "Mark done"}</button></div>`).join("")}</div>`,
+  cab: () => { const n = nearest(), list = [...hospitals].sort((a, b) => dist(a) - dist(b)), dir = h => "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=" + encodeURIComponent(h.name);
+    return head("Transport", "Cab and hospitals") + `<div class="card">${mapSVG(n)}<p class="note" id="locTxt">Demo map. Real search opens in Google Maps.</p><div class="acts"><button class="btn" onclick="locateMe()">Use my location</button><a class="btn alt" target="_blank" rel="noopener" href="${gm("hospitals near me")}">Hospitals near me</a><button class="btn alt" onclick="shareLocation()">Share location</button></div></div>
+    <div class="card"><h2>Nearest hospitals</h2>${list.map((h, i) => `<div class="row"><span><b>${h.name}</b>${i ? "" : ' <i class="chip">Nearest</i>'}<br><span class="note">${(dist(h)/12).toFixed(1)} km (demo) - ${h.info}</span></span><a class="btn" target="_blank" rel="noopener" href="${dir(h)}">Directions</a></div>`).join("")}</div>
+    <div class="card"><h2>Book a cab to ${n.name}</h2><div class="acts"><a class="btn" target="_blank" rel="noopener" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=${encodeURIComponent(n.name)}">Uber</a><a class="btn alt" target="_blank" rel="noopener" href="https://book.olacabs.com/">Ola</a><a class="btn alt" target="_blank" rel="noopener" href="${gm("taxi near me")}">Cabs near me</a></div><p class="note">Opens the app or site in a new tab. No API key is used.</p></div>`; }
+});
+
+/* ============ 12. EXTRAS: SOS hold, reminder alerts, Bluetooth band, score count-up, Hindi ============ */
+function beep(){ if(!settings.sound) return; try{ const a = new (window.AudioContext || window.webkitAudioContext)(), o = a.createOscillator(), g = a.createGain();
+  o.connect(g); g.connect(a.destination); o.frequency.value = 880; g.gain.value = .15; o.start(); o.stop(a.currentTime + .25); }catch(e){} }
+function countTo(el, to){ const from = +el.textContent || 0, t0 = performance.now();
+  (function f(t){ const k = Math.min(1, (t - t0) / 900); el.textContent = Math.round(from + (to - from) * k); if(k < 1) requestAnimationFrame(f); })(t0); }
+
+// SOS: hold the button for 3 seconds; letting go early cancels
+let sosTimer = null;
+function holdSOS(start){ const bar = $("holdBar"); if(!bar) return;
+  if(!start){ if(!sosTimer) return; clearInterval(sosTimer); sosTimer = null; bar.style.transition = "none"; bar.style.width = "0"; $("holdTxt").textContent = "Hold 3 seconds to send SOS alert"; return; }
+  let n = 3; $("holdTxt").textContent = "Keep holding... 3"; bar.style.transition = "width 3s linear"; bar.style.width = "100%";
+  sosTimer = setInterval(() => { n--; if(n > 0) return $("holdTxt").textContent = "Keep holding... " + n;
+    clearInterval(sosTimer); sosTimer = null; sendSOS(); }, 1000); }
+function sendSOS(){ buzz([200, 100, 200]); beep();
+  $("hold").innerHTML = `<div class="sosbox" style="margin-top:10px"><b>SOS alert sent (simulated)</b><br>${esc(familyContacts[0].name)} would be notified with your location. Use the buttons below to call now.</div>`; }
+
+// reminders: sound, vibration and a message when the time arrives
+const fired = new Set();
+function checkReminders(){ const d = new Date(), hm = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+  reminders.forEach(r => { const key = r.id + d.toDateString(); if(r.done || r.time !== hm || fired.has(key)) return;
+    fired.add(key); addNote("Reminder: " + r.title); toast("Reminder: " + r.title, 8000); beep(); buzz([300, 150, 300]); }); }
+
+// real heart-rate band over Bluetooth (Chrome on Android; not available in every browser)
+async function connectHR(){
+  if(!navigator.bluetooth) return toast("Bluetooth is not available in this browser. Try Chrome on Android.");
+  try{ const dev = await navigator.bluetooth.requestDevice({ filters:[{ services:["heart_rate"] }] });
+    const svc = await (await dev.gatt.connect()).getPrimaryService("heart_rate"), ch = await svc.getCharacteristic("heart_rate_measurement");
+    await ch.startNotifications(); state.btHR = true;
+    ch.addEventListener("characteristicvaluechanged", e => { const d = e.target.value; pushReading("hr", (d.getUint8(0) & 1) ? d.getUint16(1, true) : d.getUint8(1)); });
+    dev.addEventListener("gattserverdisconnected", () => { state.btHR = false; toast("Heart-rate band disconnected."); if(state.page === "devices") renderPage(); });
+    toast("Connected: " + (dev.name || "heart-rate band") + " (live)"); if(state.page === "devices") renderPage();
+  }catch(e){ toast("Bluetooth not connected: " + (e.message || "cancelled")); } }
+
+// Hindi: replaces known English phrases in the page; switching back restores the originals
+const HI = {"Dashboard":"डैशबोर्ड","Health":"स्वास्थ्य","Emergency":"आपातकाल","Hospitals":"अस्पताल","Appointments":"अपॉइंटमेंट","Medical history":"मेडिकल इतिहास","Devices":"डिवाइस","Settings":"सेटिंग्स","Support":"सहायता","Home":"होम","Family":"परिवार","Reports":"रिपोर्ट","Test":"जाँच","Cab":"कैब","Care":"केयर","Meds":"दवाइयाँ","Doctor":"डॉक्टर","Health check":"स्वास्थ्य जाँच","Hospital":"अस्पताल","Ask AI":"AI से पूछें","History":"इतिहास","Stable":"स्थिर","Needs attention":"ध्यान चाहिए","Critical":"गंभीर","Health overview":"स्वास्थ्य अवलोकन","Health score":"स्वास्थ्य स्कोर","Connected health":"कनेक्टेड हेल्थ","Simulate alert":"अलर्ट दिखाएँ","Heart rate":"हृदय गति","Blood pressure":"रक्तचाप","Temperature":"तापमान","Sleep":"नींद","Stress":"तनाव","Steps":"कदम","Water":"पानी","Weight":"वज़न","Reminders":"रिमाइंडर","Add":"जोड़ें","Mark done":"पूरा करें","Done":"पूरा","Upcoming appointment":"आगामी अपॉइंटमेंट","View appointments":"अपॉइंटमेंट देखें","Your health":"आपका स्वास्थ्य","Test now":"अभी जाँच करें","Start test now":"जाँच शुरू करें","Cab and hospitals":"कैब और अस्पताल","Doctors":"डॉक्टर","Emergency assistance":"आपातकालीन सहायता","Activate SOS":"SOS चालू करें","Find a hospital":"अस्पताल खोजें","Medical devices":"मेडिकल डिवाइस","Call":"कॉल","Video":"वीडियो","Message":"संदेश","Book":"बुक करें","Directions":"रास्ता","Use my location":"मेरी लोकेशन","Hospitals near me":"पास के अस्पताल","Share location":"लोकेशन भेजें","Book appointment":"अपॉइंटमेंट बुक करें","Contact doctor":"डॉक्टर से संपर्क","Run a new test":"नई जाँच करें","View my reports":"मेरी रिपोर्ट देखें","Cancel":"रद्द करें","Save":"सेव करें","Sign out":"साइन आउट","Call emergency contact":"आपातकालीन संपर्क को कॉल","Call ambulance (112)":"एम्बुलेंस को कॉल (112)","Find nearest hospital":"नज़दीकी अस्पताल","Nothing is dialled until you choose.":"आपके चुनने तक कुछ भी डायल नहीं होगा।","Hold 3 seconds to send SOS alert":"SOS अलर्ट भेजने के लिए 3 सेकंड दबाए रखें","Health check completed":"स्वास्थ्य जाँच पूरी हुई","Latest health check":"ताज़ा स्वास्थ्य जाँच","Blood report":"ब्लड रिपोर्ट","Doctor report":"डॉक्टर रिपोर्ट","Your appointments":"आपके अपॉइंटमेंट","Book new appointment":"नया अपॉइंटमेंट","Medical timeline":"मेडिकल टाइमलाइन","Emergency contacts":"आपातकालीन संपर्क","Nearest hospitals":"नज़दीकी अस्पताल","Monitoring":"निगरानी","All readings":"सभी रीडिंग","Live heart rate":"लाइव हृदय गति","Medication":"दवा","Account":"खाता","Profile":"प्रोफ़ाइल","Notifications":"सूचनाएँ","Privacy and security":"गोपनीयता और सुरक्षा","Connect heart-rate band":"हार्ट-रेट बैंड जोड़ें","View devices":"डिवाइस देखें","Run health check":"स्वास्थ्य जाँच चलाएँ","Ask SaathiCare...":"SaathiCare से पूछें...","Search records, doctors...":"रिकॉर्ड, डॉक्टर खोजें...","Sign in":"साइन इन","Patient name":"मरीज़ का नाम","Phone number":"फ़ोन नंबर","Your intelligent healthcare companion":"आपका स्मार्ट स्वास्थ्य साथी"};
+const origText = new WeakMap();
+function translateDom(root){ const hi = state.lang === "hi", w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  for(let n = w.nextNode(); n; n = w.nextNode()){ const raw = origText.has(n) ? origText.get(n) : n.nodeValue, key = raw.trim();
+    if(HI[key]){ origText.set(n, raw); n.nodeValue = hi ? raw.replace(key, HI[key]) : raw; } }
+  root.querySelectorAll("[placeholder]").forEach(el => { el.dataset.ph = el.dataset.ph || el.placeholder; el.placeholder = hi && HI[el.dataset.ph] ? HI[el.dataset.ph] : el.dataset.ph; }); }
+let translateTimer;
+new MutationObserver(() => { if(state.lang !== "hi") return; clearTimeout(translateTimer); translateTimer = setTimeout(() => translateDom(document.body), 30); }).observe(document.body, { childList:true, subtree:true });
+
+function showLoader(msg, ms, done){ const l = $("loader"), bar = l.querySelector(".lbar i"); $("ltxt").textContent = msg; l.hidden = false; l.classList.remove("out");
+  bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = `load ${ms}ms ease forwards`;
+  setTimeout(() => { l.classList.add("out"); setTimeout(() => l.hidden = true, 400); if(done) done(); }, ms); }
+showLoader("Loading SaathiCare...", 1600);
+
+// the menu strip drifts slowly left to right; drag it with a finger or mouse to pull it yourself
+function startNavScroll(){ const s = $("side"); let pos = 0, paused = false, last = 0;
+  const hold = () => paused = true, release = () => setTimeout(() => { pos = s.scrollLeft; paused = false; }, 1500);
+  ["touchstart", "pointerdown", "wheel"].forEach(e => s.addEventListener(e, hold, { passive:true }));
+  ["touchend", "pointerup", "pointercancel"].forEach(e => s.addEventListener(e, release));
+  if(matchMedia("(hover: hover)").matches){ s.addEventListener("mouseenter", hold); s.addEventListener("mouseleave", release); }
+  s.scrollLeft = pos = s.scrollWidth / 2;
+  (function f(t){ const half = s.scrollWidth / 2;
+    if(!paused && !matchMedia("(prefers-reduced-motion: reduce)").matches){ pos -= (t - last) * 0.03; if(pos <= 0) pos += half; s.scrollLeft = pos; }
+    else if(s.scrollLeft <= 0) s.scrollLeft += half; else if(s.scrollLeft >= half) s.scrollLeft -= half;   // keeps the loop endless while dragging
+    last = t; requestAnimationFrame(f); })(0); }
+
+/* ============ 13. NOTIFICATIONS, SUPPORT, SETTINGS, DEVICE SYNC, LOGO ============ */
+const settings = load("saathi_settings", { sound:true, vibrate:true });
+const notes = [{ t:"Welcome to SaathiCare", time:"now" }, { t:"Simulated device feed is running", time:"now" }];
+const buzz = p => settings.vibrate && navigator.vibrate && navigator.vibrate(p);
+function addNote(t){ notes.unshift({ t, time:new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" }) }); notes.length = Math.min(notes.length, 20); $("nd").hidden = false; }
+function openNotes(){ $("nd").hidden = true;
+  openPanel("Notifications", notes.length ? notes.map(n => `<div class="row"><span>${esc(n.t)}</span><span class="note">${n.time}</span></div>`).join("") + `<button class="btn alt full" onclick="notes.length=0;openNotes()">Clear all</button>` : '<p class="note">No new updates.</p>'); }
+function openSupport(){ openPanel("Support", `<div class="acts"><a class="btn" href="tel:+911800000000">Call support</a><a class="btn alt" href="mailto:support@saathicare.example">Email</a><button class="btn alt" onclick="closeSheet();focusCare()">Ask the assistant</button></div><p class="note">Phone and email are placeholders.</p>`); }
+function openAlertSettings(){ openPanel("Notifications", `<div class="row"><span>Reminder sound</span><button class="btn ${settings.sound ? "" : "alt"}" onclick="toggleSetting('sound')">${settings.sound ? "On" : "Off"}</button></div><div class="row"><span>Vibration</span><button class="btn ${settings.vibrate ? "" : "alt"}" onclick="toggleSetting('vibrate')">${settings.vibrate ? "On" : "Off"}</button></div><button class="btn full" onclick="beep();buzz([200]);toast('Test alert')">Test alert</button>`); }
+function toggleSetting(k){ settings[k] = !settings[k]; save("saathi_settings", settings); openAlertSettings(); }
+function openPrivacy(){ openPanel("Privacy and security", `<p class="note">Your name, reminders and appointments are stored only in this browser.</p><button class="btn red full" onclick="clearData()">Clear saved data</button>`); }
+function clearData(){ if(!clearData.armed){ clearData.armed = true; return toast("Tap again to confirm"); } try{ localStorage.clear(); }catch(e){} location.reload(); }
+function syncDevice(k, name){ const r = readDevice(k); pushReading(r.k, r.v, r.v2); addNote(name + " synced"); toast(`${name} synced (simulated): ${metrics[k].label} ${val(k)} ${metrics[k].unit}`); }
+const LOGO = '<svg viewBox="0 0 64 64"><defs><linearGradient id="lgx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#1e3a8a"/></linearGradient></defs><circle cx="32" cy="32" r="30" fill="url(#lgx)"/><g class="orbit"><circle cx="32" cy="32" r="25" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1.5" stroke-dasharray="3 5"/><circle cx="32" cy="7" r="3.5" fill="#fff"/></g><g class="beat"><path d="M32 47s-13-8-13-18a7.5 7.5 0 0113-5 7.5 7.5 0 0113 5c0 10-13 18-13 18z" fill="#f43f5e"/><path d="M32 28v10M27 33h10" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></g></svg>';
+document.querySelectorAll("[data-logo]").forEach(e => e.innerHTML = LOGO);
+
+// press feedback: any button flashes its pressed colour briefly (touchstart listener makes :active work on iPhones)
+document.addEventListener("touchstart", () => {}, { passive:true });
+document.addEventListener("click", e => { const b = e.target.closest("button, .btn"); if(!b) return; b.classList.add("pressed"); setTimeout(() => b.classList.remove("pressed"), 450); });
+</script></body></html>
